@@ -1,0 +1,48 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/node-feature-discovery
+- ../../bundles/clusterissuer-http01
+- ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
+- ../../base/core/namespaces/openshift-gitops
+- clusterversion.yaml
+- externalsecrets
+- secretstores
+- issuers
+- feature/odf
+- certificates
+- nodenetworkconfigurationpolicies
+
+components:
+{% if "keycloak" in oauth %}
+  {{keycloakcomponent}}
+{% endif %}
+{% if "github" in oauth %}
+  {{githubcomponent}}
+{% endif %}
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+  
+patches:
+{% if "keycloak" in oauth %}
+{{keycloakpatch}}
+{% endif %} 
+{% if "github" in oauth %}
+{{githubpatch}}
+{% endif %}
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: {{apicertName}}

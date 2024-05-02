@@ -1,0 +1,8 @@
+oauth: [keycloak, github] #Options list: [keycloak, github] or [keycloak] or [github]
+clusterType: internal #Options: internal or external
+clusterName: internal-example
+apicertName: <TEMPLATE> #in the overlay kustomization file. templates/clustertype
+vlanID: <TEMPLATE> # used in templates/nodenetworkconfigurationpolicies
+clusterVersion: <TEMPLATE> #used in clusterversion
+clusterID: <TEMPLATE> #used in clusterversion
+cephstoragePool: <TEMPLATE> #for ocs external storage cluster

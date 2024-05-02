@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+commonLabels:
+  nerc.mghpcc.org/kustomized: "true"
+
+resources:
+- ../common
+- ../../bundles/external-secrets-clustersecretstore
+- ../../base/core/namespaces/dex
+- feature/odf
+- clusterversion.yaml
+- externalsecrets
+- nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
+
+components:
+{% if "keycloak" in oauth %}
+  {{keycloakcomponent}}
+{% endif %}
+{% if "github" in oauth %}
+  {{githubcomponent}}
+{% endif %}
+
+  # this must come last in order to apply
+  # to all resources.
+  - ../../components/argocd-skip-dryrun
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+patches:
+- path: features/odf/storageclasses/ocs-external-storagecluster-ceph-rbd_patch.yaml
+- path: clustersecretstores/nerc-cluster-secrets_patch.yaml
+{% if "keycloak" in oauth %}
+{{keycloakpatch}}
+{% endif %}
+{% if "github" in oauth %}
+{{githubpatch}}
+{% endif %}
+- target:
+    kind: APIServer
+    name: cluster
+  patch: |
+    - op: replace
+      path: /spec/servingCerts/namedCertificates/0/names/0
+      value: {{apicertName}}
