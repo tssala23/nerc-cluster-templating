@@ -10,7 +10,7 @@ resources:
 - feature/odf
 - clusterversion.yaml
 - externalsecrets
-- nodenetworkconfigurationpolicies/vlan-2177-nese.yaml
+- nodenetworkconfigurationpolicies
 
 components:
   - ../../components/nerc-oauth-keycloak
@@ -61,4 +61,4 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: <TEMPLATE>
+      value: api.internal-example.rc.fas.harvard.edu

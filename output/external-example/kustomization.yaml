@@ -65,4 +65,4 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: <TEMPLATE>
+      value: api.external-example.mghpcc.org
