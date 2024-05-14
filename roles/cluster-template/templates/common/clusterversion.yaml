@@ -1,0 +1,9 @@
+apiVersion: config.openshift.io/v1
+kind: ClusterVersion
+metadata:
+  name: version
+spec:
+  channel: stable-{{cluster.clusterVersion}}
+  desiredUpdate:
+    version: {{cluster.clusterVersion}}
+  clusterID: {{cluster.clusterID}}

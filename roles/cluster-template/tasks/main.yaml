@@ -1,0 +1,17 @@
+- name: apply common templates
+  include_tasks:
+    file: apply-templates.yaml
+  vars:
+    template_dir: common
+
+- name: apply {{ cluster.address_type }} templates
+  include_tasks:
+    file: apply-templates.yaml
+  vars:
+    template_dir: "{{ cluster.address_type }}"
+
+- name: apply {{ cluster.access_type }} templates
+  include_tasks:
+    file: apply-templates.yaml
+  vars:
+    template_dir: "{{ cluster.access_type }}"

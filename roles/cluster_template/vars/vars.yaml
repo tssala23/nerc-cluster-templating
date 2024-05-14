@@ -1,7 +1,0 @@
-oauth: #Options list: [keycloak, github] or [keycloak] or [github]
-clusterType: #Options: internal or external
-clusterName: 
-vlanID: # used in templates/nodenetworkconfigurationpolicies
-clusterVersion: #used in clusterversion
-clusterID: #used in clusterversion
-cephstoragePool: #for ocs external storage cluster

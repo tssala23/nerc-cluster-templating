@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-ingress-certificate
+  namespace: openshift-config
+spec:
+  issuerRef:
+    name: letsencrypt-production-dns01
+    kind: Issuer
+  secretName: default-ingress-certificate
+  duration: {{ cluster.ingressCertDuration|default('2160h0m0s',true) }}
+  renewBefore: {{ cluster.ingressCertRenewBefore|default('360h0m0s',true) }}
+  dnsNames:
+    - "{{ cluster.ingressCertDnsName }}"
