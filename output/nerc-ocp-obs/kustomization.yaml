@@ -5,10 +5,8 @@ commonLabels:
 
 resources:
 - ../common
-{% if cluster.access_type == "admin" %}
 - ../../bundles/nerc-certificate-clusterissuers
 - ../../bundles/external-secrets-clustersecretstore
-{% endif %}
 - ../../bundles/node-feature-discovery
 - ../../bundles/clusterissuer-http01
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
@@ -22,12 +20,8 @@ resources:
 - nodenetworkconfigurationpolicies
 
 components:
-{% if "keycloak" in cluster.oauth %}
-  {{keycloakcomponent}}
-{% endif %}
-{% if "github" in cluster.oauth %}
-  {{githubcomponent}}
-{% endif %}
+  - ../../components/nerc-oauth-keycloak
+  - ../../components/nerc-oauth-github
 
   # this must come last in order to apply
   # to all resources.
@@ -37,16 +31,40 @@ generatorOptions:
   disableNameSuffixHash: true
   
 patches:
-{% if "keycloak" in cluster.oauth %}
-{{keycloakpatch}}
-{% endif %} 
-{% if "github" in cluster.oauth %}
-{{githubpatch}}
-{% endif %}
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: mss-keycloak
+        openID:
+          clientID: <ID>
+
+ 
+- patch: |
+    apiVersion: config.openshift.io/v1
+    kind: OAuth
+    metadata:
+      name: cluster
+    spec:
+      identityProviders:
+      - name: github
+        github:
+          clientID: <ID>
+- target:
+    kind: ExternalSecret
+    name: github-client-secret
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: <secretpath>
+
 - target:
     kind: APIServer
     name: cluster
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.{{ cluster.name }}.mghpcc.org
+      value: api.nerc-ocp-obs.mghpcc.org

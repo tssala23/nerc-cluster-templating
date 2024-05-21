@@ -5,7 +5,10 @@ commonLabels:
 
 resources:
 - ../common
+{% if cluster.access_type == "admin" %}
+- ../../bundles/nerc-certificate-clusterissuers
 - ../../bundles/external-secrets-clustersecretstore
+{% endif %}
 - ../../base/core/namespaces/dex
 - feature/odf
 - clusterversion.yaml

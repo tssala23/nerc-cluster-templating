@@ -5,21 +5,16 @@ metadata:
   namespace: group-sync-operator
 spec:
   secretStoreRef:
-{% if cluster.address_type == "internal" %}
-    name: nerc-cluster-secrets
-    kind: ClusterSecretStore
-{% else %}
     name: nerc-secret-store
     kind: SecretStore
-{% endif %}
   target:
     name: github-group-sync
   data:
   - secretKey: appId
     remoteRef:
-      key: nerc/{{ cluster.name }}/group-sync-operator/github-group-sync-token
+      key: nerc/nerc-ocp-prod/group-sync-operator/github-group-sync-token
       property: appId
   - secretKey: privateKey
     remoteRef:
-      key: nerc/{{ cluster.name }}/group-sync-operator/github-group-sync-token
+      key: nerc/nerc-ocp-prod/group-sync-operator/github-group-sync-token
       property: privateKey

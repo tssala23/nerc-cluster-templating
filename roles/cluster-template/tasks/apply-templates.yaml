@@ -23,7 +23,7 @@
     src: "{{ '%s/%s' % (template_dir, item.path) }}"
     dest: '{{ "%s/%s" % (output_directory, item.path) }}'
   when: >-
-    item.state == "file"
+    item.state == "file" and item.path != ".gitkeep"
   loop: "{{ query('filetree', 'templates/%s' % (template_dir))}}"
   loop_control:
     label: "{{ item.path }}"

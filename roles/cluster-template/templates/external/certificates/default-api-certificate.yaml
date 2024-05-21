@@ -6,7 +6,11 @@ metadata:
 spec:
   issuerRef:
     name: letsencrypt-production-dns01
+{% if cluster.access_type == "public" %}
     kind: Issuer
+{% else %}
+    kind: ClusterIssuer
+{% endif %}
   secretName: default-api-certificate
   duration: {{ cluster.apiCertDuration|default('2160h0m0s',true) }}
   renewBefore: {{ cluster.apiCertRenewBefore|default('360h0m0s',true) }}
