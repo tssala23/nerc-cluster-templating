@@ -30,7 +30,7 @@ clusters:
 ## Usage
 After setting the variables in the [cluster.yaml](group_vars/all/cluster.yaml) file, run the playbook `ansible-playbook playbook.yaml`.
 
-The resulting cluster dir, which would be transferred to the [cluster-scope overlays dir](https://github.com/OCP-on-NERC/nerc-ocp-config/tree/main/cluster-scope/overlays) is outputted to the [outputs](output) dir.
+The resulting cluster dir, which would be transferred to the [cluster-scope overlays dir](https://github.com/OCP-on-NERC/nerc-ocp-config/tree/main/cluster-scope/overlays) is outputted to the [output](output) dir.
 
 ## Adding New Templates
 New templates can be added by inserting the template file into the correct dir inside of the [templates](roles/cluster-template/templates) dir. If the template requires a new variable it can be added to the [cluster.yaml](group_vars/all/cluster.yaml) file.
