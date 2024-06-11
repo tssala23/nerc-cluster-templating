@@ -1,0 +1,9 @@
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - include_role:
+        name: cluster-template
+      loop: "{{ clusters }}"
+      loop_control:
+        loop_var: cluster

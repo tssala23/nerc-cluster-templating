@@ -1,0 +1,29 @@
+- name: ensure output directory
+  file:
+    state: directory
+    path: "{{ output_directory }}"
+
+- name: ensure {{ template_dir }} directories
+  file:
+    state: directory
+    path:  "{{ dest }}"
+  vars:
+    dest: '{{ "%s/%s" % (output_directory, item.path) }}'
+  when: >-
+    item.state == "directory"
+  loop: "{{ query('filetree', 'templates/%s' % (template_dir))}}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: apply {{ template_dir }} templates
+  template:
+    src:  "{{ src }}"
+    dest:  "{{ dest }}"
+  vars:
+    src: "{{ '%s/%s' % (template_dir, item.path) }}"
+    dest: '{{ "%s/%s" % (output_directory, item.path) }}'
+  when: >-
+    item.state == "file" and item.path != ".gitkeep"
+  loop: "{{ query('filetree', 'templates/%s' % (template_dir))}}"
+  loop_control:
+    label: "{{ item.path }}"
