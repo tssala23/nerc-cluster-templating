@@ -13,13 +13,14 @@ resources:
 - ../../bundles/clusterissuer-http01
 - ../../base/rbac.authorization.k8s.io/clusterroles/allow-edit-rbac
 - ../../base/core/namespaces/openshift-gitops
-- clusterversion.yaml
 - externalsecrets
-- secretstores
 - issuers
 - feature/odf
 - certificates
 - nodenetworkconfigurationpolicies
+{% if cluster.access_type == "public" %}
+- secretstores
+{% endif %}
 
 components:
 {% if "keycloak" in cluster.oauth %}
@@ -43,6 +44,21 @@ patches:
 {% if "github" in cluster.oauth %}
 {{githubpatch}}
 {% endif %}
+{% if cluster.access_type == "public" %}
+- target:
+    kind: SecretStore
+  patch: |
+    - op: replace
+      path: /spec/provider/vault/auth/kubernetes/mountPath
+      value: kubernetes/nerc-ocp-prod
+{% endif %}
+- target:
+    kind: ExternalSecret
+    name: aws-route53-credentials
+  patch: |
+    - op: replace
+      path: /spec/dataFrom/0/extract/key
+      value: nerc/{{ cluster.name }}/aws-route53-credentials
 - target:
     kind: APIServer
     name: cluster
@@ -50,3 +66,17 @@ patches:
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
       value: api.{{ cluster.name }}.mghpcc.org
+{% if cluster.access_type == "admin" %}
+- patch: |
+    apiVersion: external-secrets.io/v1beta1
+    kind: ClusterSecretStore
+    metadata:
+      name: nerc-cluster-secrets
+    spec:
+      provider:
+        vault:
+          auth:
+            kubernetes:
+              mountPath: kubernetes/nerc-ocp-obs
+          server: https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/
+{% endif %}

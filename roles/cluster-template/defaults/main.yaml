@@ -18,7 +18,7 @@ githubpatch: |
     patch: |
       - op: replace
         path: /spec/data/0/remoteRef/key
-        value: <secretpath>
+        value: nerc/{{ cluster.name }}/openshift-config/github-client-secret
 keycloakpatch: |
   - patch: |
       apiVersion: config.openshift.io/v1
