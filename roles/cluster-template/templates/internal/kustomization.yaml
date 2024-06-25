@@ -45,7 +45,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
-      value: kubernetes/nerc-ocp-prod
+      value: kubernetes/{{ cluster.name }}
 {% endif %}
 - target:
     kind: APIServer

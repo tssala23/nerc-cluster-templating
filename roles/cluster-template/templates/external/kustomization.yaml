@@ -50,7 +50,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/provider/vault/auth/kubernetes/mountPath
-      value: kubernetes/nerc-ocp-prod
+      value: kubernetes/{{ cluster.name }}
 {% endif %}
 - target:
     kind: ExternalSecret
@@ -65,7 +65,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.{{ cluster.name }}.mghpcc.org
+      value: api.{{ cluster.name }}.nerc.mghpcc.org
 {% if cluster.access_type == "admin" %}
 - patch: |
     apiVersion: external-secrets.io/v1beta1

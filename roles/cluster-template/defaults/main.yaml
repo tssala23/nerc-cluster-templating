@@ -11,7 +11,7 @@ githubpatch: |
         identityProviders:
         - name: github
           github:
-            clientID: <ID>
+            clientID: {{ cluster.githubClientID }}
   - target:
       kind: ExternalSecret
       name: github-client-secret
@@ -29,7 +29,7 @@ keycloakpatch: |
         identityProviders:
         - name: mss-keycloak
           openID:
-            clientID: <ID>
+            clientID: {{ cluster.keycloakClientID }}
 internal: |
   - target:
       kind: ExternalSecret
