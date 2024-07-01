@@ -16,6 +16,7 @@ resources:
 - externalsecrets
 - issuers
 - feature/odf
+- machineconfigs/configure-bond0
 - certificates
 - nodenetworkconfigurationpolicies
 {% if cluster.access_type == "public" %}

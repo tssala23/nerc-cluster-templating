@@ -11,6 +11,7 @@ resources:
 {% endif %}
 - ../../base/core/namespaces/dex
 - feature/odf
+- machineconfigs/configure-bond0
 - externalsecrets
 - nodenetworkconfigurationpolicies
 {% if cluster.access_type == "public" %}
