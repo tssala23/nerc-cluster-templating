@@ -9,6 +9,7 @@ resources:
 - ../../bundles/nerc-certificate-clusterissuers
 - ../../bundles/external-secrets-clustersecretstore
 {% endif %}
+- ../../bundles/patch-operator
 - ../../base/core/namespaces/dex
 - feature/odf
 - machineconfigs/configure-bond0
