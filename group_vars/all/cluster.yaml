@@ -1,0 +1,15 @@
+clusters:
+  - name: #Name of the cluster
+    address_type: #external or internal
+    access_type: #admin or public
+    oauth: #Options list: [keycloak, github] or [keycloak] or [github]
+    githubClientID: 
+    keycloakClientID:
+    vlanID: # used in templates/nodenetworkconfigurationpolicies
+    cephstoragePool: #for ocs external storage cluster
+    apiCertDuration:
+    apiCertRenewBefore:
+    apiCertDnsName:
+    ingressCertDuration:
+    ingressCertRenewBefore:
+    ingressCertDnsName:
