@@ -12,9 +12,7 @@ resources:
 - ../../bundles/patch-operator
 - ../../base/core/namespaces/dex
 - feature/odf
-- machineconfigs/configure-bond0
 - externalsecrets
-- nodenetworkconfigurationpolicies
 {% if cluster.access_type == "public" %}
 - secretstores
 {% endif %}
