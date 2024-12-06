@@ -55,7 +55,7 @@ patches:
   patch: |
     - op: replace
       path: /spec/servingCerts/namedCertificates/0/names/0
-      value: api.{{ cluster.name }}.rc.fas.harvard.edu
+      value: api.{{ cluster.name }}.nerc.mghpcc.org
 {% if cluster.access_type == "admin" %}
 - patch: |
     apiVersion: external-secrets.io/v1beta1
@@ -70,3 +70,11 @@ patches:
               mountPath: kubernetes/nerc-ocp-obs
           server: https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/
 {% endif %}
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - {{ cluster.name }}.nerc.mghpcc.org

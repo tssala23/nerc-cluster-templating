@@ -82,3 +82,11 @@ patches:
               mountPath: kubernetes/nerc-ocp-obs
           server: https://vault-ui-vault.apps.nerc-ocp-infra.rc.fas.harvard.edu/
 {% endif %}
+- target:
+    kind: Issuer
+    name: letsencrypt-.*-dns01
+  patch: |
+    - op: replace
+      path: /spec/acme/solvers/0/selector/dnsZones
+      value:
+        - {{ cluster.name }}.nerc.mghpcc.org
