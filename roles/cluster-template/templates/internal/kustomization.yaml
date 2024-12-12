@@ -13,6 +13,7 @@ resources:
 - ../../base/core/namespaces/dex
 - feature/odf
 - externalsecrets
+- machineconfigs
 {% if cluster.access_type == "public" %}
 - secretstores
 {% endif %}

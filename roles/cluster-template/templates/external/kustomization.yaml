@@ -17,6 +17,7 @@ resources:
 - externalsecrets
 - issuers
 - feature/odf
+- machineconfigs
 - certificates
 {% if cluster.access_type == "public" %}
 - secretstores
