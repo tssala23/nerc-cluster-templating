@@ -6,9 +6,9 @@ clusters:
     githubClientID: 
     keycloakClientID:
     cephstoragePool: #for ocs external storage cluster
-    apiCertDuration:
-    apiCertRenewBefore:
+    apiCertDuration: #2160h0m0s
+    apiCertRenewBefore: #360h0m0s
     apiCertDnsName:
-    ingressCertDuration:
-    ingressCertRenewBefore:
+    ingressCertDuration: #2160h0m0s
+    ingressCertRenewBefore: #360h0m0s
     ingressCertDnsName:
