@@ -30,6 +30,13 @@ keycloakpatch: |
         - name: mss-keycloak
           openID:
             clientID: {{ cluster.keycloakClientID }}
+  - target:
+      kind: ExternalSecret
+      name: oauths-clientsecret-nerc
+  patch: |
+    - op: replace
+      path: /spec/data/0/remoteRef/key
+      value: nerc/{{ cluster.name }}/openshift-config/oauths-clientsecret-nerc
 internal: |
   - target:
       kind: ExternalSecret
