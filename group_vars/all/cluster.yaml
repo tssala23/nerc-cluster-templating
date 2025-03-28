@@ -2,7 +2,7 @@ clusters:
   - name: #Name of the cluster
     address_type: #external or internal
     access_type: #admin or public
-    oauth: #Options list: [keycloak, github] or [keycloak] or [github]
+    oauth: #Options list: [keycloak,github] or [keycloak] or [github]
     githubClientID: 
     keycloakClientID:
     cephstoragePool: #for ocs external storage cluster
