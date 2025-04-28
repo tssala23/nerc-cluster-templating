@@ -34,6 +34,7 @@ generatorOptions:
   disableNameSuffixHash: true
 
 patches:
+- path: kubeletconfigs/system-reserved-patch.yaml
 {% if "keycloak" in cluster.oauth %}
 {{keycloakpatch}}
 {% endif %}
